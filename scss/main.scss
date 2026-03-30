@@ -1,0 +1,172 @@
+@use 'keyframes';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    background-color: #35633E;
+}
+
+.title {
+    &_1 {
+        font-size: 5rem;
+        text-transform: uppercase;
+
+        span {
+            transition: color 0.2s ease-in-out;
+
+            &:nth-child(odd) {
+                color: #000;
+            }
+
+            &:nth-child(even) {
+                color: #C41E3A;
+            }
+        }
+
+        &:hover {
+            cursor: pointer;
+
+            span:nth-child(odd) {
+                color: #C41E3A;
+            }
+
+            span:nth-child(even) {
+                color: #000;
+            }
+        }
+    }
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 5px;
+}
+
+.card {
+    position: relative;
+    border: solid 2px transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    font-family: monospace, monospace;
+
+    &__back, &__front {
+        backface-visibility: hidden;
+    }
+
+    &__back {
+        max-width: 100px;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    &__front {
+        position: absolute;
+        bottom: 134px;
+        left: 12px;
+        font-size: 1rem;
+        z-index: -1;
+
+        &::before {
+            position: absolute;
+            top: -8px;
+            content: attr(value);
+        }
+
+        &::after {
+            position: absolute;
+            top: 104px;
+            left: 66px;
+            content: attr(value);
+            transform: rotate(180deg);
+        }
+    }
+
+    &__spades,
+    &__clubs,
+    &__hearts,
+    &__diamonds {
+        position: absolute;
+        left: 25px;
+        top: 30px;
+        font-size: 3rem;
+
+        &::before {
+            position: absolute;
+            right: 41.5px;
+            top: -20px;
+            font-size: 1.2rem;
+        }
+
+        &::after {
+            position: absolute;
+            top: 54px;
+            left: 40px;
+            font-size: 1.2rem;
+            transform: rotate(180deg);
+        }
+    }
+
+    &__spades {
+        &::before, &::after {
+            content: "♠";
+        }
+    }
+
+    &__clubs {
+        &::before, &::after {
+            content: "♠";
+        }
+    }
+
+    &__hearts {
+        color: #C41E3A;
+
+        &::before, &::after {
+            content: "♥";
+        }
+    }
+
+    &__diamonds {
+        color: #C41E3A;
+
+        &::before, &::after {
+            content: "♦";
+        }
+    }
+
+    &_red {
+        .card__front {
+            color: #C41E3A;
+        }
+    }
+
+    &:hover {
+        border: solid 2px #000;
+        background-color: #fff;
+
+        .card__back {
+            opacity: 0;
+        }
+
+        .card__front {
+            z-index: 2;
+            background-color: #fff;
+        }
+    }
+}

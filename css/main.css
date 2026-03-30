@@ -1,0 +1,147 @@
+@charset "UTF-8";
+@keyframes flip {
+  0%, 20% {
+    transform: rotateY(0deg);
+  }
+  45%, 70% {
+    transform: rotateY(180deg);
+  }
+  95%, 100% {
+    transform: rotateY(0deg);
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: #35633E;
+}
+
+.title_1 {
+  font-size: 5rem;
+  text-transform: uppercase;
+}
+.title_1 span {
+  transition: color 0.2s ease-in-out;
+}
+.title_1 span:nth-child(odd) {
+  color: #000;
+}
+.title_1 span:nth-child(even) {
+  color: #C41E3A;
+}
+.title_1:hover {
+  cursor: pointer;
+}
+.title_1:hover span:nth-child(odd) {
+  color: #C41E3A;
+}
+.title_1:hover span:nth-child(even) {
+  color: #000;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 5px;
+}
+
+.card {
+  position: relative;
+  border: solid 2px transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  font-family: monospace, monospace;
+}
+.card__back, .card__front {
+  backface-visibility: hidden;
+}
+.card__back {
+  max-width: 100px;
+  height: 100%;
+  border-radius: 5px;
+}
+.card__front {
+  position: absolute;
+  bottom: 134px;
+  left: 12px;
+  font-size: 1rem;
+  z-index: -1;
+}
+.card__front::before {
+  position: absolute;
+  top: -8px;
+  content: attr(value);
+}
+.card__front::after {
+  position: absolute;
+  top: 104px;
+  left: 66px;
+  content: attr(value);
+  transform: rotate(180deg);
+}
+.card__spades, .card__clubs, .card__hearts, .card__diamonds {
+  position: absolute;
+  left: 25px;
+  top: 30px;
+  font-size: 3rem;
+}
+.card__spades::before, .card__clubs::before, .card__hearts::before, .card__diamonds::before {
+  position: absolute;
+  right: 41.5px;
+  top: -20px;
+  font-size: 1.2rem;
+}
+.card__spades::after, .card__clubs::after, .card__hearts::after, .card__diamonds::after {
+  position: absolute;
+  top: 54px;
+  left: 40px;
+  font-size: 1.2rem;
+  transform: rotate(180deg);
+}
+.card__spades::before, .card__spades::after {
+  content: "♠";
+}
+.card__clubs::before, .card__clubs::after {
+  content: "♠";
+}
+.card__hearts {
+  color: #C41E3A;
+}
+.card__hearts::before, .card__hearts::after {
+  content: "♥";
+}
+.card__diamonds {
+  color: #C41E3A;
+}
+.card__diamonds::before, .card__diamonds::after {
+  content: "♦";
+}
+.card_red .card__front {
+  color: #C41E3A;
+}
+.card:hover {
+  border: solid 2px #000;
+  background-color: #fff;
+}
+.card:hover .card__back {
+  opacity: 0;
+}
+.card:hover .card__front {
+  z-index: 2;
+  background-color: #fff;
+}/*# sourceMappingURL=main.css.map */
