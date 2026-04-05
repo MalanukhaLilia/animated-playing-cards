@@ -1,3 +1,4 @@
+@use 'vars' as v;
 @use 'keyframes';
 
 * {
@@ -7,7 +8,7 @@
 }
 
 .container {
-    max-width: 1170px;
+    max-width: v.$container-width;
     margin: 0 auto;
 }
 
@@ -18,7 +19,7 @@
 }
 
 body {
-    background-color: #35633E;
+    background-color: v.$background-color;
 }
 
 .title {
@@ -30,11 +31,11 @@ body {
             transition: color 0.2s ease-in-out;
 
             &:nth-child(odd) {
-                color: #000;
+                color: v.$black-color;
             }
 
             &:nth-child(even) {
-                color: #C41E3A;
+                color: v.$red-color;
             }
         }
 
@@ -42,11 +43,11 @@ body {
             cursor: pointer;
 
             span:nth-child(odd) {
-                color: #C41E3A;
+                color: v.$red-color;
             }
 
             span:nth-child(even) {
-                color: #000;
+                color: v.$black-color;
             }
         }
     }
@@ -54,44 +55,68 @@ body {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     column-gap: 5px;
+    row-gap: 10px;
+    margin-bottom: 30px;
+
+    @media screen and (max-width: 992px) {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media screen and (max-width: 480px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 .card {
     position: relative;
+    width: 100px;
+    height: 145px;
     border: solid 2px transparent;
     border-radius: 5px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.6s ease-in-out;
+    transform-style: preserve-3d;
     font-family: monospace, monospace;
 
-    &__back, &__front {
-        backface-visibility: hidden;
-    }
+    animation: flip 5s infinite ease-in-out;
+    cursor: pointer;
 
-    &__back {
-        max-width: 100px;
+    &__back,
+    &__front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
+        backface-visibility: hidden;
         border-radius: 5px;
     }
 
+    &__back {
+        object-fit: cover;
+    }
+
     &__front {
-        position: absolute;
-        bottom: 134px;
-        left: 12px;
+        background-color: #fff;
+        transform: rotateY(180deg);
         font-size: 1rem;
-        z-index: -1;
 
         &::before {
             position: absolute;
-            top: -8px;
+            top: 5px;
+            left: 10px;
             content: attr(value);
         }
 
         &::after {
             position: absolute;
-            top: 104px;
-            left: 66px;
+            bottom: 5px;
+            right: 10px;
             content: attr(value);
             transform: rotate(180deg);
         }
@@ -102,8 +127,8 @@ body {
     &__hearts,
     &__diamonds {
         position: absolute;
-        left: 25px;
-        top: 30px;
+        left: 35px;
+        top: 40px;
         font-size: 3rem;
 
         &::before {
@@ -115,58 +140,63 @@ body {
 
         &::after {
             position: absolute;
-            top: 54px;
-            left: 40px;
+            top: 58px;
+            left: 41.5px;
             font-size: 1.2rem;
             transform: rotate(180deg);
+        }
+
+        .card.value_10 & {
+            &::before {
+                right: 37.5px;
+            }
+
+            &::after {
+                left: 37.5px;
+            }
         }
     }
 
     &__spades {
-        &::before, &::after {
+        &::before,
+        &::after {
             content: "♠";
         }
     }
 
     &__clubs {
-        &::before, &::after {
-            content: "♠";
+        &::before,
+        &::after {
+            content: "♣";
         }
     }
 
     &__hearts {
-        color: #C41E3A;
+        color: v.$red-color;
 
-        &::before, &::after {
+        &::before,
+        &::after {
             content: "♥";
         }
     }
 
     &__diamonds {
-        color: #C41E3A;
+        color: v.$red-color;
 
-        &::before, &::after {
+        &::before,
+        &::after {
             content: "♦";
         }
     }
 
     &_red {
         .card__front {
-            color: #C41E3A;
+            color: v.$red-color;
         }
     }
 
-    &:hover {
-        border: solid 2px #000;
-        background-color: #fff;
-
-        .card__back {
-            opacity: 0;
-        }
-
-        .card__front {
-            z-index: 2;
-            background-color: #fff;
-        }
+    &:hover, &:active {
+        animation: none;
+        transform: rotateY(180deg);
     }
 }
